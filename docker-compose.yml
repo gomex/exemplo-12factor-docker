@@ -1,0 +1,14 @@
+web:
+  build: .
+  ports:
+   - "5000:5000"
+  volumes:
+   - .:/code
+  links:
+   - redis
+redis:
+  image: redis
+  volumes:
+   - dados_${ENV_APP}:/data
+  labels:
+   - 'app.environment=${ENV_APP}'
