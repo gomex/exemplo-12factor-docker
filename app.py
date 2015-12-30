@@ -3,8 +3,8 @@ import os
 from flask import Flask
 from redis import Redis
 
-host_redis=os.environ.get('HOST_REDIS') or 'redis'
-port_redis=os.environ.get('PORT_REDIS') or '6379'
+host_redis=os.environ.get('HOST_REDIS', 'redis')
+port_redis=os.environ.get('PORT_REDIS', '6379')
 
 app = Flask(__name__)
 redis = Redis(host=host_redis, port=port_redis)
