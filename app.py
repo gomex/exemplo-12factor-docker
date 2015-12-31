@@ -1,17 +1,11 @@
+<<<<<<< HEAD
 from flask import Flask
 from redis import Redis
 from multiprocessing import Process
 import signal, os
 
-if os.environ.get('HOST_REDIS'):
-    host_redis=os.environ.get('HOST_REDIS')
-else:
-    host_redis='redis'
-
-if os.environ.get('PORT_REDIS'):
-    port_redis=os.environ.get('PORT_REDIS')
-else:
-    port_redis=6379
+host_redis=os.environ.get('HOST_REDIS', 'redis')
+port_redis=os.environ.get('PORT_REDIS', '6379')
 
 app = Flask(__name__)
 redis = Redis(host=host_redis, port=port_redis)
