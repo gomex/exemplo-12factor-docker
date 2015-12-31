@@ -1,3 +1,8 @@
+backend:
+  image: jwilder/nginx-proxy 
+  volumes:
+   - /var/run/docker.sock:/tmp/docker.sock:ro
+
 web:
   build: .
   ports:
@@ -9,6 +14,7 @@ web:
   environment:
    - PORT_REDIS=6379
    - HOST_REDIS=redis
+   - VIRTUAL_HOST=teste.docker
 redis:
   image: redis
   volumes:
