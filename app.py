@@ -1,19 +1,27 @@
 from flask import Flask
 from redis import Redis
-import os
+from multiprocessing import Process
+import signal, os
 
 if os.environ.get('HOST_REDIS'):
-  host_redis=os.environ.get('HOST_REDIS')
+    host_redis=os.environ.get('HOST_REDIS')
 else:
-  host_redis='redis'
+    host_redis='redis'
 
 if os.environ.get('PORT_REDIS'):
-  port_redis=os.environ.get('PORT_REDIS')
+    port_redis=os.environ.get('PORT_REDIS')
 else:
-  port_redis=6379
+    port_redis=6379
 
 app = Flask(__name__)
 redis = Redis(host=host_redis, port=port_redis)
+
+def handler(signum, frame):
+    print 'Signal handler called with signal', signum
+    server.terminate()
+    server.join()
+
+signal.signal(signal.SIGTERM, handler)
 
 @app.route('/')
 def hello():
@@ -21,4 +29,8 @@ def hello():
     return 'Hello World! %s times.' % redis.get('hits')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    def run_server():
+        app.run(host="0.0.0.0", debug=True)
+
+    server = Process(target=run_server)
+    server.start()
