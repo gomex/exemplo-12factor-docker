@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask
 from redis import Redis
 from multiprocessing import Process
