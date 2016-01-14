@@ -1,0 +1,17 @@
+web:
+  build: .
+  ports:
+   - "5000:5000"
+  links:
+   - redis
+  environment:
+   - PORT_REDIS=6379
+   - HOST_REDIS=redis
+  labels:
+   - 'app.environment=${ENV_APP}'
+redis:
+  image: redis
+  volumes:
+   - dados_${ENV_APP}:/data
+  labels:
+   - 'app.environment=${ENV_APP}'
