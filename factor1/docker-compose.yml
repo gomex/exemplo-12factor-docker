@@ -9,7 +9,7 @@ web:
   labels:
    - 'app.environment=${ENV_APP}'
 redis:
-  image: redis
+  image: redis:3.2.1
   volumes:
    - dados_${ENV_APP}:/data
   labels:
