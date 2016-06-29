@@ -1,5 +1,6 @@
 from flask import Flask
 from redis import Redis
+import os
 host_run=os.environ.get('HOST_RUN', '0.0.0.0')
 debug=os.environ.get('DEBUG', 'True')
 app = Flask(__name__)
