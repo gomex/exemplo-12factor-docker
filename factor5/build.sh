@@ -12,3 +12,5 @@ docker tag ${USER}/app:${TIMESTAMP} ${USER}/app:latest
 echo "Enviando a imagem para nuvem docker"
 docker push ${USER}/app:${TIMESTAMP}
 docker push ${USER}/app:latest
+
+export TIMESTAMP
