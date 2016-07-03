@@ -1,7 +1,7 @@
 version: "2"
 services:
   web:
-    build: .
+    image: gomex/app:latest
     ports:
      - "5000:5000"
     volumes:
