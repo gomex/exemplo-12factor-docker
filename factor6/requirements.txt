@@ -1,2 +1,2 @@
-flask
-redis
+flask==0.11.1
+redis==2.10.5
