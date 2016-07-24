@@ -1,25 +1,29 @@
-web:
-  image: jwilder/nginx-proxy
-  volumes:
-   - /var/run/docker.sock:/tmp/docker.sock:ro
-  ports:
-   - "80:80"
+version: "2"
 
-backend:
-  build: .
-  volumes:
-   - .:/code
-  links:
-   - redis
-  environment:
-   - PORT_REDIS=6379
-   - HOST_REDIS=redis
-   - VIRTUAL_HOST=teste.docker
-  labels:
-   - 'app.environment=${ENV_APP}'
-redis:
-  image: redis
-  volumes:
-   - dados_${ENV_APP}:/data
-  labels:
-   - 'app.environment=${ENV_APP}'
+
+services:
+  lb:
+    container_name: lb
+    build: lb
+    restart: unless-stopped
+    networks:
+      - backend
+    ports:
+      - "80:80"
+
+  # app
+  app:
+    image: tutum/hello-world
+    restart: unless-stopped
+    networks:
+      backend:
+        aliases:
+          - apps
+    expose:
+      - 80
+    depends_on:
+      - lb
+
+networks:
+  backend:
+      driver: bridge
